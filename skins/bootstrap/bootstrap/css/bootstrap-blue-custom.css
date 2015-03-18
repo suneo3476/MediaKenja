@@ -235,7 +235,6 @@ div#footer ul {
 #b-edit {
     padding: 0px;
 }
-
 .padding-left {
     padding-left: 1em;
 }
@@ -3080,7 +3079,7 @@ select[multiple].input-lg {
 
 .btn:hover,
 .btn:focus {
-    color: #333333;
+    color: #ffffec;
     text-decoration: none;
 }
 
