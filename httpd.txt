@@ -1,0 +1,30 @@
+httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled)
+   Active: active (running) since 金 2015-02-06 23:51:41 JST; 29s ago
+  Process: 2745 ExecStop=/bin/kill -WINCH ${MAINPID} (code=exited, status=0/SUCCESS)
+  Process: 23040 ExecReload=/usr/sbin/httpd $OPTIONS -k graceful (code=exited, status=0/SUCCESS)
+ Main PID: 2750 (httpd)
+   Status: "Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec"
+   CGroup: /system.slice/httpd.service
+           ├─2750 /usr/sbin/httpd -DFOREGROUND
+           ├─2751 /usr/sbin/httpd -DFOREGROUND
+           ├─2755 /usr/sbin/httpd -DFOREGROUND
+           ├─2756 /usr/sbin/httpd -DFOREGROUND
+           ├─2757 /usr/sbin/httpd -DFOREGROUND
+           ├─2758 /usr/sbin/httpd -DFOREGROUND
+           └─2759 /usr/sbin/httpd -DFOREGROUND
+
+ 2月 06 23:51:41 media httpd[2750]: PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/apc.so' - /usr/lib64/php/modules/apc.so: cannot open shared object file: Permission denied in Unknown on line 0
+ 2月 06 23:51:41 media systemd[1]: Started The Apache HTTP Server.
+ 2月 06 23:51:42 media python[2753]: SELinux is preventing /usr/sbin/httpd from read access on the file .
+                                      
+                                      *****  Plugin catchall (100. confidence) suggests   **************************
+                                      
+                                      If you believe that httpd should be allowed read access on the  file by default.
+                                      Then you should report this as a bug.
+                                      You can generate a local policy module to allow this access.
+                                      Do
+                                      allow this access for now by executing:
+                                      # grep httpd /var/log/audit/audit.log | audit2allow -M mypol
+                                      # semodule -i mypol.pp
+                                      
