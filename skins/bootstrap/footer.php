@@ -45,8 +45,8 @@
   <ul id="footer-icons" class="noprint text-center">
     <li id="footer-poweredbyico">
     <a href="//www.mediawiki.org/">
-      <img src="http://www.mediawikibootstrapskin.co.uk//skins/common/images/poweredby_mediawiki_88x31.png"
-           alt="Powered by MediaWiki" height="31" width="88" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/49/PoweredBy_MediaWiki.svg"
+           alt="Powered by MediaWiki" height="31" width="88" style="border-radius: 5px;" />
     </a>
     <a href="http://www.mediawikibootstrapskin.co.uk/">
       <img src="http://www.mediawikibootstrapskin.co.uk/images/BootStrapSkin_mediawiki_88x31.png"

@@ -253,11 +253,17 @@ class StrappingTemplate extends BaseTemplate
             $category_name = $matches[1][0];
             ?>
         <div id="submenu" class="col-md-10 col-sm-10 col-xs-12 pull-right">
-            <a href="#">
-                <button type="button" class="btn btn-primary btn-sm">
-                    <span class="glyphicon glyphicon-save"></span>　このカテゴリのカードをまとめてダウンロード
-                </button>
-            </a>
+            <button class="btn btn-primary btn-sm">
+                <a href="../printPDF/printPDF.php?category=<?php echo $category_name; ?>" target="_blank">
+                    <span class="glyphicon glyphicon-save"></span>　今見ているカテゴリのカードをPDF形式で一括ダウンロード
+                </a>
+            </button>
+<!--            <form action="../printPDF/printPDF.php" method="GET" id="save-category-pdf" onsubmit="doSomething();return false;">-->
+<!--                <input type="hidden" name="category" value="--><?php //echo $category_name; ?><!--">-->
+<!--                <button type = "submit" class="btn btn-primary btn-sm">-->
+<!--                    <span class="glyphicon glyphicon-save"></span>　今見ているカテゴリのカードをPDF形式で一括ダウンロード-->
+<!--                </button>-->
+<!--            </form>-->
         </div>
         <?php
         }
@@ -411,41 +417,57 @@ class StrappingTemplate extends BaseTemplate
         if ($result > 0) {
             $category_name = $matches[1][0];
 
-		$cate_mem_api = 'http://media.cs.inf.shizuoka.ac.jp/api.php?format=json&action=query&list=categorymembers&cmlimit=max&cmtitle=Category:';
-		$category = $category_name;
-		$cate_mem_call = $cate_mem_api.$category;
-		$cate_mem_json = file_get_contents($cate_mem_call);
-		$cate_mem_array = json_decode($cate_mem_json);
-		
-		$r = "<ul>";
-		/* 一覧生成 */
-		$page = new stdClass();
-	        foreach($cate_mem_array->{'query'}->{'categorymembers'} as $key => $value){
-        	        $cate_mem_pageid = $value->{'pageid'};
-        	        $page_api = 'http://media.cs.inf.shizuoka.ac.jp/api.php?format=json&action=query&prop=revisions&rvprop=content&pageids=';
-        	        $page_json = file_get_contents($page_api.$cate_mem_pageid);
-        	        $page_array = json_decode($page_json);
-			$page->{$key} = new stdClass();
-        	        $title = $page_array->{'query'}->{'pages'}->{$cate_mem_pageid}->{'title'};
-			/* 項目生成 */
-			$r .= '<li><span class="glyphicon glyphicon-file"></span>';
-			$r .= '<a href="' . 'http://media.cs.inf.shizuoka.ac.jp/index.php/' . $title . '" target="_blank"> '.$title.'</a>';
-			$r .= "</li>";
-		}
-		$r .= "</ul>";
-		echo $r;
-	}
+            $cate_mem_api = 'http://media.cs.inf.shizuoka.ac.jp/api.php?format=json&action=query&list=categorymembers&cmlimit=max&cmtitle=Category:';
+            $category = $category_name;
+            $cate_mem_call = $cate_mem_api.$category;
+            $cate_mem_json = file_get_contents($cate_mem_call);
+            $cate_mem_array = json_decode($cate_mem_json);
+
+            $r = "<ul>";
+            /* 一覧生成 */
+            $page = new stdClass();
+            foreach($cate_mem_array->{'query'}->{'categorymembers'} as $key => $value){
+                $cate_mem_pageid = $value->{'pageid'};
+                $page_api = 'http://media.cs.inf.shizuoka.ac.jp/api.php?format=json&action=query&prop=revisions&rvprop=content&pageids=';
+                $page_json = file_get_contents($page_api.$cate_mem_pageid);
+                $page_array = json_decode($page_json);
+                $page->{$key} = new stdClass();
+                $title = $page_array->{'query'}->{'pages'}->{$cate_mem_pageid}->{'title'};
+                /* 項目生成 */
+                $r .= '<li><span class="glyphicon glyphicon-file"></span>';
+                $r .= '<a href="' . 'http://media.cs.inf.shizuoka.ac.jp/index.php/' . $title . '" target="_blank"> '.$title.'</a>';
+                $r .= "</li>";
+            }
+            $r .= "</ul>";
+            echo $r;
+        }
 ?>
 <script type="text/javascript">
 $(document).ready(function(){
+/* save pdf */
+//$("#save-pdf").click(function() {
+//    /* case Category Page */
+//    var api_url = 'http://media.cs.inf.shizuoka.ac.jp/printPDF/printPDF.php?category=';
+//    var reg = /カテゴリ:(.+)/;
+//    var array = decodeURI(location.pathname).match(reg);
+//    if(array.length <= 1){  return; }
+//    var category = array[1];
+//    var call_url = api_url + encodeURI(category);
+//    console.log(call_url);
+//    $.ajax({type: 'GET',
+//            url: call_url,
+//            cache: false
+//    });
+//});
 
+/* relational cards */
 if( $("#catlinks")[0] ){
     $("#catlinks").find(".cat").find("a").each(function(){
 	var category = $(this).text();
 
 	var r = '<h3><span class="glyphicon glyphicon-folder-open"></span>　'+category+'</h3><ul>';
-        var cate_mem_api = 'http://media.cs.inf.shizuoka.ac.jp/api.php?format=json&action=query&list=categorymembers&cmlimit=max&cmtitle=Category:';
-        var cate_mem_call = cate_mem_api+category;
+    var cate_mem_api = 'http://media.cs.inf.shizuoka.ac.jp/api.php?format=json&action=query&list=categorymembers&cmlimit=max&cmtitle=Category:';
+    var cate_mem_call = cate_mem_api+category;
 
 	$.ajax({type: 'GET',url: cate_mem_call,dataType: 'json',
 		success: function(json){
