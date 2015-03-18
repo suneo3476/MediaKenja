@@ -88,11 +88,11 @@ function articleShowTagForm(&$article)
     # generate the form HTML
    $tagFormHTML=<<<ENDFORM
         <!-- TagAsCategory extension START -->
-        <form action="{$actionUrl}" method="get" id="tagform" style="display: none;">
+        <form action="{$actionUrl}" method="get" id="tagform">
             <input type="hidden" name="title" value="{$article->mTitle->getPrefixedDBkey()}">
             <input type="hidden" name="action" value="tag">
-            <input type="text" name="tag" value="" size="15" />    
-            <input type="submit" value="{$sAddTag}" />
+            <input type="text" name="tag" value="" size="10" style="display: none;"/>
+            <input type="submit" value="{$sAddTag}" style="display: none;"/>
         </form>
         <script type="text/javascript">
  

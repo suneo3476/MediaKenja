@@ -253,11 +253,12 @@ class StrappingTemplate extends BaseTemplate
             $category_name = $matches[1][0];
             ?>
         <div id="submenu" class="col-md-10 col-sm-10 col-xs-12 pull-right">
-            <button class="btn btn-primary btn-sm">
                 <a href="../printPDF/printPDF.php?category=<?php echo $category_name; ?>" target="_blank">
+                    <button class="btn btn-primary btn-sm">
                     <span class="glyphicon glyphicon-save"></span>　今見ているカテゴリのカードをPDF形式で一括ダウンロード
+                    </button>
                 </a>
-            </button>
+
 <!--            <form action="../printPDF/printPDF.php" method="GET" id="save-category-pdf" onsubmit="doSomething();return false;">-->
 <!--                <input type="hidden" name="category" value="--><?php //echo $category_name; ?><!--">-->
 <!--                <button type = "submit" class="btn btn-primary btn-sm">-->
@@ -444,22 +445,30 @@ class StrappingTemplate extends BaseTemplate
 ?>
 <script type="text/javascript">
 $(document).ready(function(){
-/* save pdf */
-//$("#save-pdf").click(function() {
-//    /* case Category Page */
-//    var api_url = 'http://media.cs.inf.shizuoka.ac.jp/printPDF/printPDF.php?category=';
-//    var reg = /カテゴリ:(.+)/;
-//    var array = decodeURI(location.pathname).match(reg);
-//    if(array.length <= 1){  return; }
-//    var category = array[1];
-//    var call_url = api_url + encodeURI(category);
-//    console.log(call_url);
-//    $.ajax({type: 'GET',
-//            url: call_url,
-//            cache: false
-//    });
-//});
-
+$delete_button_html = ' <a href="javascript:void(0);" style="color:indianred" alt="このカテゴリを削除" class="delete_category_button">' +
+ '<span class="glyphicon glyphicon-remove-circle"></span></a>';
+$folder_open_html = ' <span class="glyphicon glyphicon-folder-open"></span>';
+if( $("#tag-edit")[0] ){
+    $("#tag-edit").toggle(function(){
+        $(this).text("【編集完了】");
+        $("#tagform input").css("display", "inline");
+        $(".cat").each(function(){
+            $(this).html($(this).html().split($folder_open_html).join("") + $delete_button_html);
+        });
+    },function(){
+        $(this).text("【編集】");
+        $("#tagform input").css("display", "none");
+        $(".cat").each(function(){
+            $(this).html($(this).html().split($delete_button_html).join("") + $folder_open_html);
+        });
+    });
+}
+/* delete category button */
+if( $("a.delete_category_button")[0] ){
+    $("a.delete_category_button").click(function(){
+        console.log($(this).text());
+    });
+}
 /* relational cards */
 if( $("#catlinks")[0] ){
     $("#catlinks").find(".cat").find("a").each(function(){

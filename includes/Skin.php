@@ -528,8 +528,7 @@ abstract class Skin extends ContextSource {
 		$colon = $this->msg( 'colon-separator' )->escaped();
 
 		if ( !empty( $allCats['normal'] ) ) {
-			$b = '<a href="javascript(0)"><span class="color-red edit-start">【編集】</span></a>';
-                        $b .= '<a href="javascript(0)"><span class="color-red edit-finish">【編集完了】</span></a>';
+			$b = '<a href="javascript:void(0);"><span id="tag-edit" style="color:indianred">【編集】</span></a>';
 			$t = $embed . implode( "{$pop}{$embed}", $allCats['normal'] ) . $pop;
 
 			$msg = $this->msg( 'pagecategories' )->numParams( count( $allCats['normal'] ) )->escaped();
