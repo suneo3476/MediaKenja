@@ -173,10 +173,11 @@ h1#firstHeading{
 }
 
 #bodyContent, #sidebar{
-    min-height:30em;
+    /*min-height:30em;*/
 }
 
 #bodyContent {
+    margin-top:0.5em;
     border-right: 0.5em solid #fce6c9;
     background: url('../../../common/images/clean-gray-paper.png') repeat scroll center center #e8b7f2;
     opacity: 0.9;
@@ -223,13 +224,11 @@ div#footer ul {
 
 #page-header {
     padding: 0.5em;
-    margin-bottom: 0.5em;
     margin-top: 0.5em;
-    border-left: 0.5em solid florawhite;
 }
 
 #sidebar {
-    /*margin-left:0.5em;*/
+    margin-top:0.5em;
     padding-bottom: 1em;
 }
 
@@ -248,6 +247,9 @@ div#footer ul {
 
 #header-title {
     padding-right: 0em;
+}
+#header-title div.row{
+    min-width: 150px !important;
 }
 
 #header-menu {

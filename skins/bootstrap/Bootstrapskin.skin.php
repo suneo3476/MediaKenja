@@ -235,7 +235,7 @@ class StrappingTemplate extends BaseTemplate
 				
 			</div>
 		</div>
-		<div id="header-menu" class="col-md-10 col-sm-10 col-xs-12 pull-right">
+		<div id="header-menu" class="col-md-9 col-sm-9 col-xs-12 pull-right offset1">
 			<div class="menubar">
 				<ul class="navigation nav nav-pills pull-right searchform-disabled">
 					<?php
@@ -252,7 +252,7 @@ class StrappingTemplate extends BaseTemplate
         if ($result > 0) {
             $category_name = $matches[1][0];
             ?>
-        <div id="submenu" class="col-md-10 col-sm-10 col-xs-12 pull-right">
+        <div id="submenu" class="col-md-9 col-sm-9 col-xs-12 pull-right offset1">
                 <a href="../printPDF/printPDF.php?category=<?php echo $category_name; ?>" target="_blank">
                     <button class="btn btn-primary btn-sm">
                     <span class="glyphicon glyphicon-save"></span>　今見ているカテゴリのカードをPDF形式で一括ダウンロード
@@ -330,11 +330,21 @@ class StrappingTemplate extends BaseTemplate
                     <?php } ?>
                     <span dir="auto"> <?php $this->html('title') ?></span>
                 </h1>
-        <?php if ($this->data['catlinks']): ?>
-        <!-- catlinks -->
+                <!-- to bbs link -->
+                <?php
+                preg_match('/^\/mwiki\/index\.php\/(.+?)$/u',parse_url($current_url, PHP_URL_PATH), $matches);
+                if(isset($matches[1])){
+                    $page_name = $matches[1];
+//                    $bbs_url = $current_url.split($page_name).join("")."トーク:".$page_name;
+                }
+                ?>
+                <a href="javascript:void(0);" ><button class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-list-alt"></span> このカードの掲示板</button></a>
+                <!-- catlinks -->
+        <?php if ($this->data['catlinks']){ ?>
         <?php $this->html('catlinks'); ?>
-        <!-- /catlinks -->
-    <?php endif; ?>
+        <?php } ?>
+                <!-- /catlinks -->
                 <!-- subtitle -->
                 <div id="contentSub" <?php $this->html('userlangattributes') ?>><?php $this->html('subtitle') ?></div>
                 <!-- /subtitle -->
@@ -360,11 +370,21 @@ class StrappingTemplate extends BaseTemplate
                         <?php } ?>
                         <span dir="auto"> <?php $this->html('title') ?></span>
                     </h1>
-        <?php if ($this->data['catlinks']): ?>
-        <!-- catlinks -->
-        <?php $this->html('catlinks'); ?>
-        <!-- /catlinks -->
-    <?php endif; ?>
+                    <!-- to bbs link -->
+                    <?php
+                    preg_match('/^\/mwiki\/index\.php\/(.+?)$/u',parse_url($current_url, PHP_URL_PATH), $matches);
+                    if(isset($matches[1])){
+                        $page_name = $matches[1];
+//                    $bbs_url = $current_url.split($page_name).join("")."トーク:".$page_name;
+                    }
+                    ?>
+                    <a href="javascript:void(0);" ><button class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-list-alt"></span> このカードの掲示板</button></a>
+                    <!-- catlinks -->
+                    <?php if ($this->data['catlinks']){ ?>
+                        <?php $this->html('catlinks'); ?>
+                    <?php } ?>
+                    <!-- /catlinks -->
                     <!-- subtitle -->
                     <div
                         id="contentSub" <?php $this->html('userlangattributes') ?>><?php $this->html('subtitle') ?></div>
@@ -471,6 +491,7 @@ if( $("a.delete_category_button")[0] ){
 }
 /* relational cards */
 if( $("#catlinks")[0] ){
+
     $("#catlinks").find(".cat").find("a").each(function(){
 	var category = $(this).text();
 
