@@ -129,9 +129,9 @@ function run(){
 
     $cate_mem_api = 'http://media.cs.inf.shizuoka.ac.jp/api.php?format=json&action=query&list=categorymembers&cmlimit=max&cmtitle=Category:';
     $query_category = $_GET['category'];
-    $cate_mem_call = $cate_mem_api . $query_category;
-    $cate_mem_json = file_get_contents($cate_mem_call);
-    $cate_mem_array = json_decode($cate_mem_json);
+	$category_name = toSJIS($_GET['category']);
+//	typeenc($query_category);
+    $cate_mem_array = json_decode(file_get_contents($cate_mem_api . $query_category));
 
     $page = new stdClass();
 
@@ -209,8 +209,13 @@ function run(){
         $pdf->SetTextColor(255 - 16);
         $pdf->Write(15, $author_date);
     }
+	/* ready to output */
+//	$file = basename(tempnam('.', 'tmp'));
+//	rename($file, $file.'.pdf');
+//	$file .= '.pdf';
+
     /*output a PDF*/
-    $pdf->Close();
+	$pdf->Close();
     $pdf->Output('mediacard-' . toSJIS($query_category) . '.pdf', "I");
 }
 

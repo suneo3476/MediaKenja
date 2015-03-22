@@ -25,13 +25,13 @@ $wgSitename = "MediaKenjaβ";
 ## For more information on customizing the URLs
 ## (like /w/index.php/Page_title to /wiki/Page_title) please see:
 ## https://www.mediawiki.org/wiki/Manual:Short_URL
-$wgScriptPath = "http://media.cs.inf.shizuoka.ac.jp";
-##$wgScriptPath = "http://localhost/mwiki";
+##$wgScriptPath = "http://media.cs.inf.shizuoka.ac.jp";
+$wgScriptPath = "http://localhost/mwiki";
 $wgScriptExtension = ".php";
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer = "http://media.cs.inf.shizuoka.ac.jp";
-##$wgServer = "http://localhost/mwiki";
+##$wgServer = "http://media.cs.inf.shizuoka.ac.jp";
+$wgServer = "http://localhost/mwiki";
 
 ## The relative URL path to the skins directory
 $wgStylePath = "$wgScriptPath/skins";

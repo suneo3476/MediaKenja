@@ -324,7 +324,8 @@ else { ?>
 				?>
 				<a href = "<?php echo $reverse_card_url; ?>" >
 <button class = "btn btn-primary btn-sm" >
-<span class = "glyphicon glyphicon-list-alt" ></span > <?php echo $is_talk_page ? 'カードに戻る' : '掲示板に進む'; ?>
+<span class = "glyphicon glyphicon-chevron-right" ></span ><span class = "glyphicon glyphicon-list-alt" ></span >
+	<?php echo $is_talk_page ? ' カードに戻る' : ' 掲示板に進む'; ?>
 </button >
 </a >
 <!-- /to bbs link -->
@@ -334,7 +335,7 @@ else { ?>
 				if ( $result > 0 ) {
 					$category_name = $matches[ 1 ][ 0 ];
 					?>
-<a href = "../printPDF/printPDF.php?category=<?php echo $category_name; ?>" target = "_blank" >
+					<a href = "../printPDF/printPDF.php?category=<?php echo $category_name; ?>" target = "_blank" >
 <button class = "btn btn-primary btn-sm" >
 <span class = "glyphicon glyphicon-save" ></span >　今見ているカテゴリのカードをPDF形式で一括ダウンロード
 </button >
@@ -342,7 +343,7 @@ else { ?>
 				<?php
 				}
 				?>
-<!-- /save category's cards as PDF -->
+				<!-- /save category's cards as PDF -->
 
 <!-- catlinks -->
 				<?php if ( $this->data[ 'catlinks' ] ) { ?>
@@ -397,7 +398,14 @@ else { ?>
 	?>
 	<a href = "<?php echo $reverse_card_url; ?>" >
 <button class = "btn btn-primary btn-sm" >
-	<span class = "glyphicon glyphicon-list-alt" ></span > <?php echo $is_talk_page ? 'カードに戻る' : '掲示板に進む'; ?>
+<?php if ( $is_talk_page ) { ?>
+	<span class = "glyphicon glyphicon-chevron-left" ></span >
+<?php }
+else { ?>
+	<span class = "glyphicon glyphicon-chevron-right" ></span >
+<?php } ?>
+	<span class = "glyphicon glyphicon-list-alt" ></span >
+	<?php echo $is_talk_page ? ' カードに戻る' : ' 掲示板に進む'; ?>
 </button >
 </a >
 <!-- /to bbs link -->
@@ -407,7 +415,7 @@ else { ?>
 	if ( $result > 0 ) {
 		$category_name = $matches[ 1 ][ 0 ];
 		?>
-<a href = "../printPDF/printPDF.php?category=<?php echo $category_name; ?>" target = "_blank" >
+		<a href = "../printPDF/printPDF.php?category=<?php echo $category_name; ?>" target = "_blank" >
 <button class = "btn btn-primary btn-sm" >
 <span class = "glyphicon glyphicon-save" ></span >　今見ているカテゴリのカードをPDF形式で一括ダウンロード
 </button >
@@ -502,6 +510,21 @@ else { ?>
 		} ?>
 <script type="text/javascript">
 $(document).ready(function(){
+/* menubar icons */
+$('#header-menu li ').each(function(){
+	if($(this).children('a').text().match(/^あ|か|さたな|はま$/)){
+		$(this).html('　【'+$(this).children('a').text()+'】').css('font-size','smaller');
+	}
+	else if($(this).children('a').text().match(/^カテゴリ$/)){
+		$(this).html(' ｜ '+$(this).children('a').text()+'');
+	}
+	else if($(this).children('a').text().indexOf('全')!=-1){
+		$(this).children('a').append(' <span class="glyphicon glyphicon-th-large"></span>');
+	}else{
+		$(this).children('a').append(' <span class="glyphicon glyphicon-folder-open"></span>');
+	}
+});
+
 /* bbs string replacing*/
 $('title').html( $('title').html().replace('トーク','掲示板') );
 $('#firstHeading').html( $('#firstHeading').html().replace('トーク','掲示板') );
